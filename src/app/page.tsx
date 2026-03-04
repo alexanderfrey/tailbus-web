@@ -436,20 +436,20 @@ function HowItWorks() {
           >
             <Terminal>
               <span className="text-green-400">$</span> tailbus register
-              planner
+              strategy
               <br />
               <span className="text-gray-500">
-                Registered as &quot;planner&quot;
+                Registered as &quot;strategy&quot;
               </span>
               <br />
               <br />
               <span className="text-green-400">$</span> tailbus list
               <br />
-              {"  "}planner
+              {"  "}strategy
               <br />
-              {"  "}researcher
+              {"  "}marketing
               <br />
-              {"  "}writer
+              {"  "}finance
             </Terminal>
           </Step>
         </div>
@@ -609,7 +609,7 @@ function Architecture() {
               <rect x="60" y="180" width="264" height="76" rx="12" fill="url(#nodeGrad)" stroke="#8b5cf6" strokeWidth="1" />
             </g>
             <text x="192" y="206" textAnchor="middle" fill="#c4b5fd" fontSize="14" fontWeight="700" fontFamily="system-ui, sans-serif">tailbusd</text>
-            <text x="192" y="224" textAnchor="middle" fill="#94a3b8" fontSize="12" fontFamily="system-ui, sans-serif">your-mac</text>
+            <text x="192" y="224" textAnchor="middle" fill="#94a3b8" fontSize="12" fontFamily="system-ui, sans-serif">office-mac</text>
             <text x="192" y="244" textAnchor="middle" fill="#475569" fontSize="10" fontFamily="system-ui, sans-serif">192.168.1.x &middot; behind NAT</text>
 
             {/* Node 2 */}
@@ -617,7 +617,7 @@ function Architecture() {
               <rect x="476" y="180" width="264" height="76" rx="12" fill="url(#nodeGrad)" stroke="#8b5cf6" strokeWidth="1" />
             </g>
             <text x="608" y="206" textAnchor="middle" fill="#c4b5fd" fontSize="14" fontWeight="700" fontFamily="system-ui, sans-serif">tailbusd</text>
-            <text x="608" y="224" textAnchor="middle" fill="#94a3b8" fontSize="12" fontFamily="system-ui, sans-serif">cloud-gpu</text>
+            <text x="608" y="224" textAnchor="middle" fill="#94a3b8" fontSize="12" fontFamily="system-ui, sans-serif">cloud-vm</text>
             <text x="608" y="244" textAnchor="middle" fill="#475569" fontSize="10" fontFamily="system-ui, sans-serif">10.0.0.x &middot; private VPC</text>
 
             {/* Unix socket lines — Node 1 */}
@@ -629,17 +629,17 @@ function Architecture() {
             <line x1="540" y1="256" x2="516" y2="308" stroke="#334155" strokeWidth="1" strokeDasharray="4 4" className="arch-flow-down" />
             <line x1="676" y1="256" x2="700" y2="308" stroke="#334155" strokeWidth="1" strokeDasharray="4 4" className="arch-flow-down" />
 
-            {/* Agent: planner */}
+            {/* Agent: strategy */}
             <g filter="url(#glowGreen)">
-              <rect x="64" y="312" width="72" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
+              <rect x="60" y="312" width="80" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
             </g>
-            <text x="100" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">planner</text>
+            <text x="100" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">strategy</text>
 
-            {/* Agent: coder */}
+            {/* Agent: marketing */}
             <g filter="url(#glowGreen)">
-              <rect x="156" y="312" width="72" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
+              <rect x="152" y="312" width="84" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
             </g>
-            <text x="192" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">coder</text>
+            <text x="194" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">marketing</text>
 
             {/* MCP gateway */}
             <g filter="url(#glowAmber)">
@@ -648,17 +648,17 @@ function Architecture() {
             <text x="284" y="329" textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="600" fontFamily="system-ui, sans-serif">MCP</text>
             <text x="284" y="341" textAnchor="middle" fill="#fbbf24" fontSize="9" fontFamily="system-ui, sans-serif">gateway</text>
 
-            {/* Agent: researcher */}
+            {/* Agent: finance */}
             <g filter="url(#glowGreen)">
-              <rect x="476" y="312" width="80" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
+              <rect x="478" y="312" width="76" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
             </g>
-            <text x="516" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">researcher</text>
+            <text x="516" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">finance</text>
 
-            {/* Agent: writer */}
+            {/* Agent: engineering */}
             <g filter="url(#glowGreen)">
-              <rect x="664" y="312" width="72" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
+              <rect x="652" y="312" width="96" height="36" rx="18" fill="url(#agentGrad)" stroke="#34d399" strokeWidth="1" />
             </g>
-            <text x="700" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">writer</text>
+            <text x="700" y="335" textAnchor="middle" fill="#6ee7b7" fontSize="11" fontWeight="600" fontFamily="system-ui, sans-serif">engineering</text>
 
             {/* Claude / Cursor — MCP client */}
             <line x1="284" y1="348" x2="284" y2="384" stroke="#f59e0b" strokeWidth="1" strokeDasharray="4 4" className="arch-flow-down" />
