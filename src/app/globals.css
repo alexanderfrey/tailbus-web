@@ -63,3 +63,31 @@ body {
   opacity: 0.5;
   filter: blur(4px);
 }
+
+/* Architecture diagram animations */
+@keyframes flowRight {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes flowDown {
+  0% { stroke-dashoffset: 16; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.arch-flow-p2p {
+  animation: flowRight 1s linear infinite;
+}
+
+.arch-flow-down {
+  animation: flowDown 0.8s linear infinite;
+}
+
+.arch-pulse {
+  animation: subtlePulse 3s ease-in-out infinite;
+}
