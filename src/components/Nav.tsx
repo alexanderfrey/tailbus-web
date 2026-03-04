@@ -39,6 +39,12 @@ export function Nav() {
           >
             Releases
           </Link>
+          <Link
+            href="/dashboard"
+            className="text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            Dashboard
+          </Link>
           <a
             href={`https://github.com/${GITHUB_REPO}`}
             target="_blank"
