@@ -22,16 +22,10 @@ export function Nav() {
             Get started
           </Link>
           <Link
-            href="/#how-it-works"
+            href="/pricing"
             className="text-sm text-gray-400 hover:text-white transition-colors"
           >
-            How it works
-          </Link>
-          <Link
-            href="/#features"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
-          >
-            Features
+            Pricing
           </Link>
           <Link
             href="/releases"
