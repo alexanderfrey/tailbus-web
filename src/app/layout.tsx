@@ -13,22 +13,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "tailbus — Make your agents reachable from anywhere",
+  title: "tailbus — Your agents are smart. Now make them a team.",
   description:
-    "A2A gave you the protocol. Tailbus gives you the infrastructure. One command to deploy agents with TLS, auth, and discovery — no containers, no YAML.",
+    "One install, and every agent you're running can discover each other by name and collaborate across departments. No endpoints, no networking code, no infrastructure to manage.",
   openGraph: {
-    title: "tailbus — Make your agents reachable from anywhere",
+    title: "tailbus — Your agents are smart. Now make them a team.",
     description:
-      "A2A gave you the protocol. Tailbus gives you the infrastructure. One command to deploy agents with TLS, auth, and discovery.",
+      "One install, and every agent you're running can discover each other and collaborate across machines. No endpoints, no networking code.",
     url: "https://tailbus.co",
     siteName: "tailbus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "tailbus — Make your agents reachable from anywhere",
+    title: "tailbus — Your agents are smart. Now make them a team.",
     description:
-      "A2A gave you the protocol. Tailbus gives you the infrastructure. One command to deploy agents with TLS, auth, and discovery.",
+      "One install, and every agent you're running can discover each other and collaborate across machines. No endpoints, no networking code.",
   },
 };
 

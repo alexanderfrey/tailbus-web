@@ -91,3 +91,13 @@ body {
 .arch-pulse {
   animation: subtlePulse 3s ease-in-out infinite;
 }
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 0.8s step-end infinite;
+}

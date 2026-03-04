@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -42,46 +42,7 @@ function Terminal({
   );
 }
 
-function Nav() {
-  return (
-    <nav className="fixed top-0 w-full z-50 border-b border-gray-800/50 bg-[#0a0a0a]/80 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-bold tracking-tight">tailbus</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <a
-            href="#how-it-works"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
-          >
-            How it works
-          </a>
-          <a
-            href="#features"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
-          >
-            Features
-          </a>
-          <a
-            href="https://github.com/alexanderfrey/tailbus"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1.5"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
-            GitHub
-          </a>
-        </div>
-      </div>
-    </nav>
-  );
-}
+import { Nav } from "@/components/Nav";
 
 function Hero() {
   const installCmd = "curl -sSL https://tailbus.co/install | sh";
@@ -94,18 +55,18 @@ function Hero() {
         </div>
 
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-8">
-          Make your agents
+          Your agents are smart.
           <br />
           <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-blue-400 bg-clip-text text-transparent">
-            reachable from anywhere
+            Now make them a team.
           </span>
         </h1>
 
         <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-          Spin up an agent on any machine, give it a name, and it&apos;s
-          instantly discoverable and reachable by every other agent you&apos;re
-          running — without configuring a single endpoint, opening a single
-          port, or writing a single line of networking code.
+          One install, and every agent you&apos;re running — on any machine,
+          behind any NAT — can discover each other by name and collaborate
+          across departments. No endpoints to configure, no networking code
+          to write, no infrastructure to manage.
         </p>
 
         <div className="max-w-lg mx-auto mb-6">
@@ -128,98 +89,183 @@ function Hero() {
           </div>
         </div>
 
-        <p className="text-sm text-gray-500 mb-4">
-          Linux and macOS. No dependencies. Two binaries.
-        </p>
-
         <p className="text-sm text-gray-500">
-          Then run{" "}
-          <code className="text-gray-300 bg-gray-800 px-1.5 py-0.5 rounded">
-            tailbusd
-          </code>{" "}
-          to start the daemon — it opens your browser, you login with Google,
-          and you&apos;re connected.
+          Linux and macOS. No dependencies. Two binaries.
         </p>
       </div>
     </section>
   );
 }
 
-function FourProblems() {
-  const facets = [
-    {
-      label: "Networking",
-      description:
-        "Stable endpoints, TLS, NAT traversal. Getting agent-to-agent traffic flowing across home NATs, corporate firewalls, and cloud VPCs without port forwarding or reverse proxies.",
-      color: "text-blue-400",
-      borderColor: "border-blue-500/30",
-      bgColor: "bg-blue-500/10",
-    },
-    {
-      label: "Discovery",
-      description:
-        "How does agent A find agent B? And how does agent C join a conversation it wasn't part of? Agents register handles and discover each other automatically — and can recruit new agents mid-session with @-mentions.",
-      color: "text-violet-400",
-      borderColor: "border-violet-500/30",
-      bgColor: "bg-violet-500/10",
-    },
-    {
-      label: "Identity",
-      description:
-        "Who is this agent, and should I trust it? Authentication, authorization, and mutual TLS — so agents can verify each other without you wiring up an auth layer.",
-      color: "text-cyan-400",
-      borderColor: "border-cyan-500/30",
-      bgColor: "bg-cyan-500/10",
-    },
-    {
-      label: "Sessions",
-      description:
-        "Multi-turn, structured interactions — not just fire-and-forget API calls. Agents need to open a session, exchange messages, and resolve it when the work is done.",
-      color: "text-emerald-400",
-      borderColor: "border-emerald-500/30",
-      bgColor: "bg-emerald-500/10",
-    },
+function GetStarted() {
+  return (
+    <section className="pb-24 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Step 1: Start the daemon */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-6 h-6 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold flex items-center justify-center">
+                1
+              </span>
+              <span className="text-sm font-medium text-gray-300">
+                Start the daemon
+              </span>
+            </div>
+            <Terminal title="terminal">
+              <div className="text-sm leading-loose">
+                <span className="text-green-400">$</span>{" "}
+                <span className="text-gray-200">tailbusd</span>
+                <br />
+                <span className="text-gray-500">
+                  Open https://coord.tailbus.co/oauth/verify
+                </span>
+                <br />
+                <span className="text-gray-500">Enter code: </span>
+                <span className="text-yellow-300">ABCD-EFGH</span>
+                <br />
+                <span className="text-green-400">
+                  Connected as you@company.com
+                </span>
+              </div>
+            </Terminal>
+            <p className="text-xs text-gray-500 mt-3">
+              Login with Google. Your machine joins the mesh.
+            </p>
+          </div>
+
+          {/* Step 2: Register your agent */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-6 h-6 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold flex items-center justify-center">
+                2
+              </span>
+              <span className="text-sm font-medium text-gray-300">
+                Register your agent
+              </span>
+            </div>
+            <Terminal title="agent.py">
+              <pre className="text-sm leading-relaxed">
+                <span className="text-gray-500"># pip install tailbus</span>
+                {"\n"}
+                <span className="text-violet-400">from</span>{" "}
+                <span className="text-green-400">tailbus</span>{" "}
+                <span className="text-violet-400">import</span>{" "}
+                <span className="text-gray-200">AsyncAgent</span>
+                {"\n\n"}
+                <span className="text-gray-200">agent</span>{" "}
+                <span className="text-gray-500">=</span>{" "}
+                <span className="text-green-400">AsyncAgent</span>
+                <span className="text-gray-400">(</span>
+                <span className="text-amber-300">&quot;finance&quot;</span>
+                <span className="text-gray-400">)</span>
+                {"\n\n"}
+                <span className="text-violet-400">@</span>
+                <span className="text-green-400">agent.on_message</span>
+                {"\n"}
+                <span className="text-violet-400">async def</span>{" "}
+                <span className="text-blue-400">handle</span>
+                <span className="text-gray-400">(msg):</span>
+                {"\n"}
+                {"  "}
+                <span className="text-gray-500"># your logic here</span>
+                {"\n"}
+                {"  "}
+                <span className="text-violet-400">await</span>{" "}
+                <span className="text-gray-200">agent.</span>
+                <span className="text-blue-400">resolve</span>
+                <span className="text-gray-400">(msg.session, result)</span>
+                {"\n\n"}
+                <span className="text-violet-400">await</span>{" "}
+                <span className="text-gray-200">agent.</span>
+                <span className="text-blue-400">run_forever</span>
+                <span className="text-gray-400">()</span>
+              </pre>
+            </Terminal>
+            <p className="text-xs text-gray-500 mt-3">
+              That&apos;s it. <code className="text-gray-400 bg-gray-800 px-1 py-0.5 rounded text-xs">finance</code> is
+              now discoverable by every agent on your mesh.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BeforeAfter() {
+  const withoutItems = [
+    "Set up endpoints and reverse proxies for every agent",
+    "Configure TLS certificates and auth between services",
+    "Write NAT traversal or deploy to public cloud",
+    "Build service discovery so agents can find each other",
+    "Wire up routing logic for multi-agent conversations",
+    "Maintain all of it as your agent count grows",
+  ];
+
+  const withItems = [
+    { text: "Install tailbus", detail: "one command" },
+    { text: "Register a handle", detail: "one line of code" },
+    { text: "Agents find each other", detail: "automatic" },
   ];
 
   return (
     <section className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-6">
-          One problem, four parts
+          Stop building plumbing, start building agents
         </h2>
-        <p className="text-gray-400 text-center mb-16 max-w-3xl mx-auto text-lg leading-relaxed">
-          Getting agents to talk to each other across machines today means
-          solving four things yourself. Tailbus handles all four with one
-          install.
+        <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto text-lg leading-relaxed">
+          Every integration between two agents costs your team a sprint.
+          Tailbus makes it zero.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-6">
-          {facets.map((f) => (
-            <div
-              key={f.label}
-              className={`p-6 rounded-xl bg-gray-900/50 border ${f.borderColor}`}
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <span
-                  className={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded ${f.bgColor} ${f.color}`}
-                >
-                  {f.label}
-                </span>
-              </div>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                {f.description}
-              </p>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Without */}
+          <div className="p-6 rounded-xl bg-red-950/20 border border-red-500/20">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-red-400 mb-5">
+              Without tailbus
+            </h3>
+            <div className="flex flex-col gap-3">
+              {withoutItems.map((item) => (
+                <div key={item} className="flex items-start gap-2.5">
+                  <span className="text-red-400/60 mt-0.5 shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" />
+                    </svg>
+                  </span>
+                  <span className="text-sm text-gray-400">{item}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <p className="text-gray-500 text-center mt-10 text-sm max-w-2xl mx-auto">
-          Each of these has a point solution — Tailscale for networking, A2A for
-          protocol, OAuth for auth. But nobody bundles them for the person
-          running 3–10 agents across a laptop, a home server, and a cloud VM
-          who doesn&apos;t want to become a DevOps engineer to make them
-          collaborate.
-        </p>
+          {/* With */}
+          <div className="p-6 rounded-xl bg-green-950/20 border border-green-500/20">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-green-400 mb-5">
+              With tailbus
+            </h3>
+            <div className="flex flex-col gap-4">
+              {withItems.map((item) => (
+                <div key={item.text} className="flex items-start gap-2.5">
+                  <span className="text-green-400/60 mt-0.5 shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 1.06-1.06L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span className="text-sm text-gray-300 font-medium">{item.text}</span>
+                    <span className="text-sm text-gray-500 ml-2">— {item.detail}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-gray-500 mt-6 leading-relaxed">
+              Networking, discovery, identity, and sessions — handled.
+              Your team writes business logic, not infrastructure.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -284,72 +330,280 @@ function AtHandleExplainer() {
   );
 }
 
+interface ChatEntry {
+  type: "message";
+  handle: string;
+  color: string;
+  meta?: string;
+  text: string;
+  highlight?: { text: string; color: string }[];
+}
+
+interface DividerEntry {
+  type: "divider";
+  text: string;
+}
+
+type TimelineEntry = ChatEntry | DividerEntry;
+
+const chatTimeline: TimelineEntry[] = [
+  {
+    type: "message",
+    handle: "strategy",
+    color: "blue",
+    meta: "office-mac \u00b7 192.168.1.x",
+    text: "We need to finalize the Q3 launch plan. Target date is July 15. Can you draft the go-to-market timeline?",
+  },
+  {
+    type: "message",
+    handle: "marketing",
+    color: "violet",
+    meta: "cloud-vm \u00b7 10.0.0.x",
+    text: "Draft timeline ready. Phases: awareness (June 1\u201315), pre-launch (June 16\u201330), launch week (July 7\u201315). I need budget numbers for the paid media allocation before I can finalize the awareness phase.",
+  },
+  {
+    type: "message",
+    handle: "strategy",
+    color: "blue",
+    text: "Makes sense. Let me pull in finance. @finance What\u2019s the remaining Q3 marketing budget? We need the paid media line item specifically.",
+    highlight: [{ text: "@finance", color: "text-amber-400" }],
+  },
+  {
+    type: "divider",
+    text: "session opened to finance \u00b7 home-server \u00b7 172.16.0.x",
+  },
+  {
+    type: "message",
+    handle: "finance",
+    color: "amber",
+    meta: "home-server \u00b7 172.16.0.x",
+    text: "Q3 marketing budget has $48,200 remaining. Paid media line item is $22,000 unallocated. Want me to place a hold for the launch campaign?",
+  },
+  {
+    type: "message",
+    handle: "marketing",
+    color: "violet",
+    text: "Yes, hold $18,000 against paid media \u2014 that covers the awareness and pre-launch phases. I\u2019ll send the final allocation breakdown in the next session.",
+  },
+];
+
+function TypingText({
+  text,
+  highlight,
+  charIndex,
+}: {
+  text: string;
+  highlight?: { text: string; color: string }[];
+  charIndex: number;
+}) {
+  const visible = text.slice(0, charIndex);
+  const isComplete = charIndex >= text.length;
+
+  if (!highlight || highlight.length === 0) {
+    return (
+      <span>
+        {visible}
+        {!isComplete && <span className="animate-blink text-gray-500">|</span>}
+      </span>
+    );
+  }
+
+  // Render with highlights applied to visible portion
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+
+  for (const h of highlight) {
+    const idx = visible.indexOf(h.text);
+    if (idx !== -1) {
+      if (idx > lastIndex) {
+        parts.push(visible.slice(lastIndex, idx));
+      }
+      parts.push(
+        <span key={h.text} className={`${h.color} font-semibold`}>
+          {h.text}
+        </span>
+      );
+      lastIndex = idx + h.text.length;
+    }
+  }
+  if (lastIndex < visible.length) {
+    parts.push(visible.slice(lastIndex));
+  }
+
+  return (
+    <span>
+      {parts}
+      {!isComplete && <span className="animate-blink text-gray-500">|</span>}
+    </span>
+  );
+}
+
 function UseCase() {
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const [started, setStarted] = React.useState(false);
+  const [activeEntry, setActiveEntry] = React.useState(-1);
+  const [charIndex, setCharIndex] = React.useState(0);
+  const [completedEntries, setCompletedEntries] = React.useState<Set<number>>(
+    new Set()
+  );
+
+  // Start animation when scrolled into view
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true);
+          setActiveEntry(0);
+          setCharIndex(0);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [started]);
+
+  // Typing effect
+  React.useEffect(() => {
+    if (activeEntry < 0 || activeEntry >= chatTimeline.length) return;
+
+    const entry = chatTimeline[activeEntry];
+
+    if (entry.type === "divider") {
+      // Show divider instantly, pause, then move on
+      const timeout = setTimeout(() => {
+        setCompletedEntries((prev) => new Set(prev).add(activeEntry));
+        if (activeEntry + 1 < chatTimeline.length) {
+          setActiveEntry(activeEntry + 1);
+          setCharIndex(0);
+        }
+      }, 600);
+      return () => clearTimeout(timeout);
+    }
+
+    const textLength = entry.text.length;
+
+    if (charIndex < textLength) {
+      const timeout = setTimeout(() => {
+        setCharIndex((c) => Math.min(c + 2, textLength));
+      }, 18);
+      return () => clearTimeout(timeout);
+    }
+
+    // Message complete — pause then advance
+    const timeout = setTimeout(() => {
+      setCompletedEntries((prev) => new Set(prev).add(activeEntry));
+      if (activeEntry + 1 < chatTimeline.length) {
+        setActiveEntry(activeEntry + 1);
+        setCharIndex(0);
+      }
+    }, 400);
+    return () => clearTimeout(timeout);
+  }, [activeEntry, charIndex]);
+
+  const colorMap: Record<string, { badge: string; border: string }> = {
+    blue: {
+      badge: "bg-blue-500/15 text-blue-400 border-blue-500/30",
+      border: "border-blue-500/20",
+    },
+    violet: {
+      badge: "bg-violet-500/15 text-violet-400 border-violet-500/30",
+      border: "border-violet-500/20",
+    },
+    amber: {
+      badge: "bg-amber-500/15 text-amber-400 border-amber-500/30",
+      border: "border-amber-500/20",
+    },
+  };
+
   return (
     <section className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-          See it in action
+          Agents that collaborate like departments
         </h2>
         <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          A full multi-turn session. Strategy and marketing work through a
-          product launch, then pull in finance mid-conversation.
+          Strategy and marketing work through a product launch,
+          then pull in finance mid-conversation — autonomously,
+          across three machines.
         </p>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto" ref={sectionRef}>
           <div className="rounded-xl bg-[#0c1222] border border-gray-800/60 overflow-hidden">
             <div className="px-5 py-3 border-b border-gray-800/60 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-400/80" />
+              <div className={`w-2 h-2 rounded-full ${started ? "bg-green-400/80" : "bg-gray-600"}`} />
               <span className="text-xs text-gray-400 font-medium">
                 session &middot; product-launch-q3
               </span>
             </div>
-            <div className="p-5 flex flex-col gap-4">
-              <ChatMessage handle="strategy" color="blue" meta="office-mac &middot; 192.168.1.x">
-                We need to finalize the Q3 launch plan. Target date is July 15.
-                Can you draft the go-to-market timeline?
-              </ChatMessage>
+            <div className="p-5 flex flex-col gap-4" style={{ minHeight: 320 }}>
+              {chatTimeline.map((entry, i) => {
+                const isVisible = i <= activeEntry;
+                const isActive = i === activeEntry;
+                const isComplete = completedEntries.has(i);
 
-              <ChatMessage handle="marketing" color="violet" meta="cloud-vm &middot; 10.0.0.x">
-                Draft timeline ready. Phases: awareness (June 1–15), pre-launch
-                (June 16–30), launch week (July 7–15). I need budget numbers
-                for the paid media allocation before I can finalize the
-                awareness phase.
-              </ChatMessage>
+                if (!isVisible) return null;
 
-              <ChatMessage handle="strategy" color="blue">
-                Makes sense. Let me pull in finance.{" "}
-                <span className="text-amber-400 font-semibold">@finance</span>{" "}
-                What&apos;s the remaining Q3 marketing budget? We need the paid
-                media line item specifically.
-              </ChatMessage>
+                if (entry.type === "divider") {
+                  return (
+                    <div
+                      key={i}
+                      className={`flex items-center gap-3 py-1 px-1 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
+                    >
+                      <div className="h-px flex-1 bg-amber-500/20" />
+                      <span className="text-[11px] text-amber-400/70 whitespace-nowrap font-medium">
+                        {entry.text}
+                      </span>
+                      <div className="h-px flex-1 bg-amber-500/20" />
+                    </div>
+                  );
+                }
 
-              <div className="flex items-center gap-3 py-1 px-1">
-                <div className="h-px flex-1 bg-amber-500/20" />
-                <span className="text-[11px] text-amber-400/70 whitespace-nowrap font-medium">
-                  session opened to finance &middot; home-server &middot; 172.16.0.x
-                </span>
-                <div className="h-px flex-1 bg-amber-500/20" />
-              </div>
+                const c = colorMap[entry.color] || colorMap.blue;
 
-              <ChatMessage handle="finance" color="amber" meta="home-server &middot; 172.16.0.x">
-                Q3 marketing budget has $48,200 remaining. Paid media line item
-                is $22,000 unallocated. Want me to place a hold for the launch
-                campaign?
-              </ChatMessage>
-
-              <ChatMessage handle="marketing" color="violet">
-                Yes, hold $18,000 against paid media — that covers the awareness
-                and pre-launch phases. I&apos;ll send the final allocation
-                breakdown in the next session.
-              </ChatMessage>
+                return (
+                  <div key={i} className={`border-l-2 ${c.border} pl-4 py-2`}>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span
+                        className={`text-xs font-semibold px-1.5 py-0.5 rounded border ${c.badge}`}
+                      >
+                        {entry.handle}
+                      </span>
+                      {entry.meta && (
+                        <span className="text-[11px] text-gray-600">
+                          {entry.meta}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-300 leading-relaxed">
+                      {isActive && !isComplete ? (
+                        <TypingText
+                          text={entry.text}
+                          highlight={entry.highlight}
+                          charIndex={charIndex}
+                        />
+                      ) : (
+                        <TypingText
+                          text={entry.text}
+                          highlight={entry.highlight}
+                          charIndex={entry.text.length}
+                        />
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
           <p className="text-gray-400 text-center mt-8 text-base leading-relaxed max-w-2xl mx-auto">
-            Three agents, three machines, two NATs. No agent knows the
-            others&apos; IPs. Just @-mention a handle and the mesh opens a
-            session to it — discovery, auth, and routing happen automatically.
+            Three agents, three machines, zero integration work.
+            Each agent only knows the others&apos; names — the mesh
+            handles discovery, auth, and routing automatically.
           </p>
         </div>
       </div>
@@ -846,11 +1100,11 @@ function Features() {
     <section id="features" className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-          The infrastructure you&apos;d build anyway
+          Everything your agents need to collaborate
         </h2>
         <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          Everything between &ldquo;my agent works locally&rdquo; and
-          &ldquo;my agents collaborate across machines.&rdquo;
+          Networking, discovery, identity, and sessions — so your team
+          builds agent logic, not infrastructure.
         </p>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -897,10 +1151,10 @@ function CTA() {
     <section className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-          Stop yak-shaving, start shipping agents
+          Go from isolated agents to one collaborating system
         </h2>
         <p className="text-gray-400 mb-10">
-          Open source. Self-hostable. Free tier always available.
+          Open source. Self-hostable. One install, your agents are a team.
         </p>
 
         <div className="max-w-xl mx-auto mb-8">
@@ -979,12 +1233,12 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <AtHandleExplainer />
         <UseCase />
-        <FourProblems />
-        <HowItWorks />
-        <Architecture />
+        <BeforeAfter />
+        <AtHandleExplainer />
+        <GetStarted />
         <MCPHighlight />
+        <Architecture />
         <Features />
         <CTA />
       </main>
