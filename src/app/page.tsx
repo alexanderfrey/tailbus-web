@@ -664,41 +664,150 @@ function MCPHighlight() {
   return (
     <section className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-5xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="inline-block mb-4 px-2.5 py-0.5 text-xs font-medium text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 rounded-full">
+          Built-in MCP gateway
+        </div>
+        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+          Your agents, inside Claude and Cursor
+        </h2>
+        <p className="text-gray-400 mb-12 max-w-3xl text-lg leading-relaxed">
+          Write a Python agent, register it on the mesh, and it&apos;s
+          instantly available as a tool in any MCP-compatible client.
+          No server, no endpoint, no glue code.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* Step 1: Python agent */}
           <div>
-            <div className="inline-block mb-4 px-2.5 py-0.5 text-xs font-medium text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 rounded-full">
-              Built-in MCP gateway
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-6 h-6 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold flex items-center justify-center">
+                1
+              </span>
+              <span className="text-sm font-medium text-gray-300">Write your agent</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Your agents, inside Claude and Cursor
-            </h2>
-            <p className="text-gray-400 leading-relaxed mb-4">
-              Every Tailbus node includes an HTTP server that exposes your agents
-              as MCP tools. Any MCP-compatible client — Claude, ChatGPT, Cursor —
-              can invoke agents on your mesh without any extra setup.
-            </p>
-            <p className="text-gray-400 leading-relaxed">
-              Register an agent on a cloud GPU, and it&apos;s immediately
-              available as a tool in your IDE. The mesh handles routing,
-              auth, and NAT traversal behind the scenes.
-            </p>
-          </div>
-          <div>
-            <Terminal title="mcp-config.json">
+            <Terminal title="finance.py">
               <pre className="text-sm leading-relaxed">
-{`{
-  "mcpServers": {
-    "tailbus": {
-      "url": "http://localhost:1423/mcp"
-    }
-  }
-}`}
+{`\x1b[38;5;245m# pip install tailbus\x1b[0m
+`}
+                <span className="text-violet-400">from</span>{" "}
+                <span className="text-green-400">tailbus</span>{" "}
+                <span className="text-violet-400">import</span>{" "}
+                <span className="text-gray-200">AsyncAgent, Manifest</span>
+                {"\n\n"}
+                <span className="text-gray-200">agent</span>{" "}
+                <span className="text-gray-500">=</span>{" "}
+                <span className="text-green-400">AsyncAgent</span>
+                <span className="text-gray-400">(</span>
+                <span className="text-amber-300">&quot;finance&quot;</span>
+                <span className="text-gray-400">,</span>
+                {"\n  "}
+                <span className="text-gray-400">manifest=</span>
+                <span className="text-green-400">Manifest</span>
+                <span className="text-gray-400">(</span>
+                {"\n    "}
+                <span className="text-gray-400">description=</span>
+                <span className="text-amber-300">&quot;Budget queries&quot;</span>
+                <span className="text-gray-400">))</span>
+                {"\n\n"}
+                <span className="text-violet-400">@</span>
+                <span className="text-green-400">agent.on_message</span>
+                {"\n"}
+                <span className="text-violet-400">async def</span>{" "}
+                <span className="text-blue-400">handle</span>
+                <span className="text-gray-400">(msg):</span>
+                {"\n  "}
+                <span className="text-gray-500"># your logic here</span>
+                {"\n  "}
+                <span className="text-violet-400">await</span>{" "}
+                <span className="text-gray-200">agent.</span>
+                <span className="text-blue-400">resolve</span>
+                <span className="text-gray-400">(msg.session,</span>
+                {"\n    "}
+                <span className="text-amber-300">&quot;Q3 budget: $48,200&quot;</span>
+                <span className="text-gray-400">)</span>
+                {"\n\n"}
+                <span className="text-violet-400">await</span>{" "}
+                <span className="text-gray-200">agent.</span>
+                <span className="text-blue-400">run_forever</span>
+                <span className="text-gray-400">()</span>
               </pre>
             </Terminal>
-            <p className="text-xs text-gray-500 mt-3 text-center">
-              One endpoint. All your agents as tools.
-            </p>
           </div>
+
+          {/* Step 2: MCP config */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-6 h-6 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold flex items-center justify-center">
+                2
+              </span>
+              <span className="text-sm font-medium text-gray-300">Point Claude or Cursor at your daemon</span>
+            </div>
+            <Terminal title="mcp-config.json">
+              <pre className="text-sm leading-relaxed">
+                <span className="text-gray-400">{`{`}</span>
+                {"\n  "}
+                <span className="text-blue-400">&quot;mcpServers&quot;</span>
+                <span className="text-gray-400">:</span>{" "}
+                <span className="text-gray-400">{`{`}</span>
+                {"\n    "}
+                <span className="text-blue-400">&quot;tailbus&quot;</span>
+                <span className="text-gray-400">:</span>{" "}
+                <span className="text-gray-400">{`{`}</span>
+                {"\n      "}
+                <span className="text-blue-400">&quot;url&quot;</span>
+                <span className="text-gray-400">:</span>{" "}
+                <span className="text-amber-300">&quot;http://localhost:1423/mcp&quot;</span>
+                {"\n    "}
+                <span className="text-gray-400">{`}`}</span>
+                {"\n  "}
+                <span className="text-gray-400">{`}`}</span>
+                {"\n"}
+                <span className="text-gray-400">{`}`}</span>
+              </pre>
+            </Terminal>
+            {/* What Claude sees */}
+            <div className="mt-6 rounded-xl bg-gray-900/50 border border-gray-800/50 overflow-hidden">
+              <div className="px-4 py-2.5 border-b border-gray-800/50">
+                <span className="text-xs text-gray-500 font-medium">What Claude sees</span>
+              </div>
+              <div className="p-4">
+                <div className="flex items-start gap-3 mb-3">
+                  <div className="mt-0.5 w-5 h-5 rounded bg-amber-500/15 flex items-center justify-center shrink-0">
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" className="text-amber-400">
+                      <path d="M6.122.392a1.75 1.75 0 0 1 3.756 0l.71 3.745a.956.956 0 0 0 .771.771l3.745.71a1.75 1.75 0 0 1 0 3.756l-3.745.71a.956.956 0 0 0-.771.771l-.71 3.745a1.75 1.75 0 0 1-3.756 0l-.71-3.745a.956.956 0 0 0-.771-.771L.896 9.874a1.75 1.75 0 0 1 0-3.756l3.745-.71a.956.956 0 0 0 .771-.771L5.412.392Z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-300 font-medium">Tool: <span className="text-amber-400">finance</span></p>
+                    <p className="text-xs text-gray-500 mt-0.5">Budget queries</p>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  Every handle becomes a callable tool. Claude can invoke{" "}
+                  <code className="text-amber-300 bg-gray-800 px-1 py-0.5 rounded">finance</code>,{" "}
+                  <code className="text-amber-300 bg-gray-800 px-1 py-0.5 rounded">marketing</code>,{" "}
+                  <code className="text-amber-300 bg-gray-800 px-1 py-0.5 rounded">engineering</code> — even
+                  agents on other machines in the mesh — all through one MCP endpoint.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* How it connects */}
+        <div className="max-w-3xl mx-auto mt-12">
+          <div className="flex items-center gap-3 text-sm text-gray-500 justify-center flex-wrap">
+            <span className="text-green-400 font-medium">finance.py</span>
+            <span className="text-gray-600">→ Unix socket →</span>
+            <span className="text-violet-400 font-medium">tailbusd</span>
+            <span className="text-gray-600">→ MCP gateway →</span>
+            <span className="text-amber-400 font-medium">Claude / Cursor</span>
+          </div>
+          <p className="text-center text-gray-500 text-sm mt-3">
+            Your agent registers a handle with the local daemon.
+            The MCP gateway exposes each handle as a tool that Claude and Cursor can call by name — the
+            gateway opens a session, waits for the response, and returns it. Works across machines.
+          </p>
         </div>
       </div>
     </section>
