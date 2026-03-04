@@ -159,7 +159,7 @@ function FourProblems() {
     {
       label: "Discovery",
       description:
-        "How does agent A find agent B? Without hardcoded URLs, DNS records, or a service registry you have to host and maintain yourself.",
+        "How does agent A find agent B? And how does agent C join a conversation it wasn't part of? Agents register handles and discover each other automatically — and can recruit new agents mid-session with @-mentions.",
       color: "text-violet-400",
       borderColor: "border-violet-500/30",
       bgColor: "bg-violet-500/10",
@@ -226,45 +226,153 @@ function FourProblems() {
   );
 }
 
+function ChatMessage({
+  handle,
+  color,
+  meta,
+  children,
+}: {
+  handle: string;
+  color: string;
+  meta?: string;
+  children: React.ReactNode;
+}) {
+  const colorMap: Record<string, { badge: string; border: string }> = {
+    blue: { badge: "bg-blue-500/15 text-blue-400 border-blue-500/30", border: "border-blue-500/20" },
+    violet: { badge: "bg-violet-500/15 text-violet-400 border-violet-500/30", border: "border-violet-500/20" },
+    amber: { badge: "bg-amber-500/15 text-amber-400 border-amber-500/30", border: "border-amber-500/20" },
+  };
+  const c = colorMap[color] || colorMap.blue;
+
+  return (
+    <div className={`chat-msg border-l-2 ${c.border} pl-4 py-2`}>
+      <div className="flex items-center gap-2 mb-1.5">
+        <span className={`text-xs font-semibold px-1.5 py-0.5 rounded border ${c.badge}`}>
+          {handle}
+        </span>
+        {meta && <span className="text-[11px] text-gray-600">{meta}</span>}
+      </div>
+      <div className="text-sm text-gray-300 leading-relaxed">{children}</div>
+    </div>
+  );
+}
+
 function UseCase() {
   return (
     <section className="py-24 px-6 border-t border-gray-800/50">
-      <div className="max-w-3xl mx-auto">
-        <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-br from-blue-500/5 via-violet-500/5 to-blue-500/5 border border-gray-800/50">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6">
-            Picture this
-          </h2>
-          <p className="text-gray-300 leading-relaxed text-lg">
-            You have a research agent on a cloud GPU, a planner running on your
-            Mac, and a coding agent on your home server. Three machines, three
-            networks, probably two NATs. You don&apos;t want to containerize
-            anything. You don&apos;t want to set up DNS. You just want them to
-            work together.
-          </p>
-          <p className="text-gray-400 leading-relaxed text-lg mt-4">
-            With Tailbus, each machine runs{" "}
-            <code className="text-gray-300 bg-gray-800/80 px-1.5 py-0.5 rounded text-base">
-              tailbusd
-            </code>
-            . Your agents register handles —{" "}
-            <code className="text-gray-300 bg-gray-800/80 px-1.5 py-0.5 rounded text-base">
-              researcher
-            </code>
-            ,{" "}
-            <code className="text-gray-300 bg-gray-800/80 px-1.5 py-0.5 rounded text-base">
-              planner
-            </code>
-            ,{" "}
-            <code className="text-gray-300 bg-gray-800/80 px-1.5 py-0.5 rounded text-base">
-              coder
-            </code>{" "}
-            — and discover each other automatically. The planner opens a session
-            with the researcher, gets results back, delegates to the coder. No
-            port forwarding. No hardcoded URLs. They just find each other.
-          </p>
-          <p className="text-gray-400 leading-relaxed text-lg mt-4">
-            Then you open Claude and invoke any of them as MCP tools.
-          </p>
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
+          Agents that recruit each other
+        </h2>
+        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+          Two agents are working through a product launch. Mid-session, they
+          @-mention finance — the mesh auto-opens a session to it, wherever
+          it lives.
+        </p>
+
+        <div className="grid md:grid-cols-[1fr,280px] gap-8 items-start">
+          <div className="rounded-xl bg-[#0c1222] border border-gray-800/60 overflow-hidden">
+            <div className="px-5 py-3 border-b border-gray-800/60 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-400/80" />
+              <span className="text-xs text-gray-400 font-medium">
+                session &middot; product-launch-q3
+              </span>
+            </div>
+            <div className="p-5 flex flex-col gap-4">
+              <ChatMessage handle="strategy" color="blue" meta="your-mac &middot; 192.168.1.x">
+                We need to finalize the Q3 launch plan. Target date is July 15.
+                Can you draft the go-to-market timeline?
+              </ChatMessage>
+
+              <ChatMessage handle="marketing" color="violet" meta="cloud-vm &middot; 10.0.0.x">
+                Draft timeline ready. Phases: awareness (June 1–15), pre-launch
+                (June 16–30), launch week (July 7–15). I need budget numbers
+                for the paid media allocation before I can finalize the
+                awareness phase.
+              </ChatMessage>
+
+              <ChatMessage handle="strategy" color="blue">
+                Makes sense. Let me pull in finance.{" "}
+                <span className="text-amber-400 font-semibold">@finance</span>{" "}
+                What&apos;s the remaining Q3 marketing budget? We need the paid
+                media line item specifically.
+              </ChatMessage>
+
+              <div className="flex items-center gap-3 py-1 px-1">
+                <div className="h-px flex-1 bg-amber-500/20" />
+                <span className="text-[11px] text-amber-400/70 whitespace-nowrap font-medium">
+                  session opened to finance &middot; home-server &middot; 172.16.0.x
+                </span>
+                <div className="h-px flex-1 bg-amber-500/20" />
+              </div>
+
+              <ChatMessage handle="finance" color="amber" meta="home-server &middot; 172.16.0.x">
+                Q3 marketing budget has $48,200 remaining. Paid media line item
+                is $22,000 unallocated. Want me to place a hold for the launch
+                campaign?
+              </ChatMessage>
+
+              <ChatMessage handle="marketing" color="violet">
+                Yes, hold $18,000 against paid media — that covers the awareness
+                and pre-launch phases. I&apos;ll send the final allocation
+                breakdown in the next session.
+              </ChatMessage>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div className="rounded-xl bg-gray-900/50 border border-gray-800/50 p-4">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Three machines
+              </h3>
+              <div className="flex flex-col gap-2.5 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                  <span className="text-gray-400">
+                    <span className="text-blue-400 font-medium">strategy</span>{" "}
+                    on your Mac
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+                  <span className="text-gray-400">
+                    <span className="text-violet-400 font-medium">marketing</span>{" "}
+                    on a cloud VM
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  <span className="text-gray-400">
+                    <span className="text-amber-400 font-medium">finance</span>{" "}
+                    on a home server
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl bg-gray-900/50 border border-gray-800/50 p-4">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                What happened
+              </h3>
+              <div className="flex flex-col gap-2 text-sm text-gray-400">
+                <p>
+                  <span className="text-blue-400">strategy</span> and{" "}
+                  <span className="text-violet-400">marketing</span> were
+                  mid-session.
+                </p>
+                <p>
+                  strategy @-mentioned{" "}
+                  <span className="text-amber-400">finance</span> — the mesh
+                  auto-opened a session to it on a different machine, behind a
+                  different NAT.
+                </p>
+                <p>
+                  No agent knew the others&apos; IPs. No one configured an
+                  endpoint.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -622,9 +730,9 @@ function MCPHighlight() {
 function Features() {
   const heroFeatures = [
     {
-      title: "Handle-based discovery",
+      title: "Handles + @-mentions",
       description:
-        'Agents register names like "planner" or "researcher" and find each other across machines automatically. No hardcoded URLs, no DNS, no service registry to maintain. Agent A just asks for agent B by name.',
+        'Agents register names like "planner" or "marketing." Two agents mid-session can pull in a third with @marketing — the mesh auto-opens a session to it, wherever it lives. Agents recruit each other by name without knowing machines, IPs, or endpoints.',
     },
     {
       title: "NAT traversal + mTLS",
