@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tailbus.co"),
   title: "tailbus — Your agents are smart. Now make them a team.",
   description:
     "One install, and every agent you're running can discover each other by name and collaborate across departments. No endpoints, no networking code, no infrastructure to manage.",
@@ -42,6 +43,31 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: "tailbus",
+              url: "https://tailbus.co",
+              applicationCategory: "DeveloperApplication",
+              operatingSystem: "Linux, macOS",
+              description:
+                "Open-source mesh network that lets AI agents discover each other by name and collaborate across machines.",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+              },
+              sourceOrganization: {
+                "@type": "Organization",
+                name: "tailbus",
+                url: "https://tailbus.co",
+              },
+            }),
+          }}
+        />
         {children}
       </body>
     </html>

@@ -1,0 +1,43 @@
+# tailbus
+
+> Your agents are smart. Now make them a team.
+
+tailbus is an open-source mesh network that lets AI agents discover each other by name and collaborate across machines. One install, no networking code, no infrastructure to manage.
+
+## What it does
+
+- Agents register a handle (e.g. @marketing, @finance, @deploy) and become instantly discoverable
+- Any agent can message any other agent by handle — the mesh handles routing, NAT traversal, and encryption
+- Works peer-to-peer over gRPC with automatic discovery via a coordination server
+- MCP gateway lets Claude, Cursor, and other AI tools call any agent on the mesh as a tool
+- Supports the A2A (agent-to-agent) protocol
+
+## Who it's for
+
+- Teams building multiple AI agents that need to collaborate
+- Companies running agents across departments (marketing, finance, engineering, etc.)
+- Developers who want agent-to-agent communication without building networking infrastructure
+
+## Key links
+
+- Website: https://tailbus.co
+- Getting started: https://tailbus.co/getting-started
+- GitHub: https://github.com/alexanderfrey/tailbus
+- Blog: https://tailbus.co/blog
+- Pricing: https://tailbus.co/pricing
+
+## How it works
+
+1. Install tailbus (one command: `curl -sSL https://tailbus.co/install | sh`)
+2. Start the daemon (`tailbusd`) and authenticate with Google OAuth
+3. Register agents with handles using the Python SDK (`pip install tailbus`)
+4. Agents discover and message each other by handle — no endpoints, no auth tokens, no routing config
+
+## Technical details
+
+- Two binaries: `tailbusd` (daemon) and `tailbus` (CLI)
+- Python SDK: `tailbus` on PyPI
+- Encrypted gRPC for agent-to-agent communication
+- NAT traversal built in (works behind firewalls, on laptops, across clouds)
+- Coordination server for discovery (messages never pass through it)
+- Linux and macOS supported

@@ -1,0 +1,44 @@
+---
+title: "Your Agents Are Already Smart. They Just Can't Find Each Other."
+description: "Every company is building AI agents. Almost none of them can talk to each other. That's the real bottleneck — and it's costing you quarters, not sprints."
+date: "2026-03-04"
+author: "Alex Frey"
+---
+
+Here's a scene that plays out at every company building with AI right now.
+
+Marketing built an agent that writes campaign briefs. Finance built one that tracks budgets. Strategy has one that synthesizes market research. Each agent is genuinely good at its job. Each agent has no idea the others exist.
+
+So when the CEO asks "what's the plan for the Q3 launch?" — a human has to manually copy context between three separate systems, reconcile the outputs, and stitch together something coherent. The agents did the thinking. A person did the plumbing.
+
+That's not automation. That's a more elaborate way to create busywork.
+
+## The integration tax
+
+Every time two agents need to talk, someone files a ticket. An engineer spends days wiring up API endpoints, auth tokens, and networking between services. Multiply that by every pair of agents that should collaborate, and you've burned a quarter on infrastructure that has nothing to do with your product.
+
+This is the integration tax, and it compounds fast. Three agents that need to collaborate means three connections. Ten agents means forty-five. The cost isn't linear — it's combinatorial. Most teams hit the wall around agent four or five, when the plumbing work starts to outweigh the agent work.
+
+The result is predictable: teams stop connecting agents. Each department optimizes in isolation. The marketing agent gets brilliant at writing briefs that nobody's finance agent ever validates.
+
+## What cross-functional actually looks like
+
+Imagine strategy kicks off a Q3 planning session. It messages `@marketing` for a go-to-market timeline. Marketing drafts the phases, realizes it needs budget numbers, and pulls in `@finance`. Finance checks the remaining allocation, places a hold, and responds — all without a human routing messages between Slack channels or copying data between dashboards.
+
+That's not a hypothetical. It's what happens when agents can discover each other by name and open conversations on the fly. No pre-wired integrations. No central orchestrator deciding who talks to whom. Agents collaborate the way your best people do — by reaching out to whoever has the context they need.
+
+## The visibility problem
+
+There's a second issue that's harder to see until you're in it. When agents work in isolation, nobody knows what they're doing. The CEO asks "what are our agents actually working on?" and the honest answer is: we'd have to check each one individually.
+
+With a mesh, every conversation has a session. You can see that strategy asked marketing for a plan, marketing pulled in finance for budget, and finance placed a hold — all in one trace. It's the difference between twenty separate log files and one coherent narrative of work getting done.
+
+You don't need an observability platform for this. You need agents that communicate through a shared system instead of isolated point-to-point connections.
+
+## An afternoon, not a quarter
+
+The shift from isolated agents to a collaborating system doesn't require rearchitecting anything. Install a daemon on each machine where agents run. Give each agent a handle — `@marketing`, `@finance`, `@strategy`. They're immediately discoverable to every other agent on the mesh.
+
+No endpoint configuration. No auth token management. No networking decisions. The mesh handles discovery, routing, and delivery. Your engineers go back to writing the logic that makes each agent good at its job.
+
+The agents you've already built are smart enough. The bottleneck was never intelligence — it was connectivity. Remove that, and the system you imagined when you greenlit the AI budget is the system you actually get.

@@ -28,6 +28,12 @@ export function Nav() {
             Pricing
           </Link>
           <Link
+            href="/blog"
+            className="text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            Blog
+          </Link>
+          <Link
             href="/releases"
             className="text-sm text-gray-400 hover:text-white transition-colors"
           >

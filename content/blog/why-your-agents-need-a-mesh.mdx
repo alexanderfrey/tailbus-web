@@ -1,0 +1,36 @@
+---
+title: "Why Your Agents Need a Mesh"
+description: "Single agents hit a ceiling fast. A mesh network lets them discover each other, share context, and collaborate — without you writing the glue code."
+date: "2026-03-04"
+author: "Alex Frey"
+---
+
+Most teams start with a single agent. One LLM pipeline that handles a task end-to-end. It works — until it doesn't.
+
+The moment you need a second agent, problems appear. How does the code-review agent ask the deployment agent to roll back? How does the monitoring agent tell the on-call agent something is wrong? You end up writing bespoke integrations: webhooks, queues, shared databases, polling loops. Every new connection is more glue code to maintain.
+
+## The discovery problem
+
+The deeper issue is **discovery**. Agent A needs to know that Agent B exists, where it lives, and how to talk to it. Hard-code an address and you've created a brittle dependency. Use a shared database and you've built a service registry from scratch.
+
+A mesh solves this at the infrastructure level. Every agent registers a handle — a human-readable name like `@deploy` or `@code-review`. Any other agent on the mesh can send a message to that handle without knowing the underlying host, port, or protocol. The mesh handles discovery, routing, and delivery.
+
+## Context flows naturally
+
+Once agents can discover each other, something interesting happens: context starts flowing without you orchestrating it.
+
+A monitoring agent detects an anomaly and messages `@triage`. The triage agent investigates and messages `@deploy` with a rollback request. Each agent does what it's good at, passing structured context to the next. No central controller needed.
+
+This is different from a pipeline. Pipelines are linear and predefined. A mesh lets agents collaborate dynamically based on what's actually happening.
+
+## Why not just use HTTP?
+
+You could expose each agent as an API. But then you're back to managing URLs, auth tokens, retries, and network topology. What happens when an agent moves to a different machine? What about NAT traversal when agents run on developer laptops?
+
+Tailbus handles all of this. Agents talk over encrypted gRPC with automatic peer discovery. NAT traversal is built in. An MCP gateway lets Claude and Cursor call any agent on the mesh as a tool. You write the agent logic — tailbus handles the networking.
+
+## Start small
+
+You don't need to redesign your architecture. Install the daemon, register one handle, and send your first message. The mesh grows with you — from two agents on a laptop to hundreds across your infrastructure.
+
+The agents are coming whether we plan for it or not. The question is whether they'll be isolated silos or a collaborative network. A mesh makes the answer obvious.
