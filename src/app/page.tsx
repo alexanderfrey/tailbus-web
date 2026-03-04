@@ -84,8 +84,7 @@ function Nav() {
 }
 
 function Hero() {
-  const installCmd =
-    "curl -sSL https://raw.githubusercontent.com/alexanderfrey/tailbus/main/install.sh | sh";
+  const installCmd = "curl -sSL https://tailbus.co/install | sh";
 
   return (
     <section className="pt-32 pb-20 px-6">
@@ -109,7 +108,7 @@ function Hero() {
           port, or writing a single line of networking code.
         </p>
 
-        <div className="max-w-2xl mx-auto mb-6">
+        <div className="max-w-lg mx-auto mb-6">
           <div className="glow-border">
             <div className="terminal">
               <div className="terminal-header">
@@ -121,7 +120,7 @@ function Hero() {
               </div>
               <div className="terminal-body text-left">
                 <span className="text-green-400">$</span>{" "}
-                <span className="text-gray-200 font-medium text-base sm:text-lg">
+                <span className="text-gray-200 font-medium text-lg">
                   {installCmd}
                 </span>
               </div>
@@ -257,20 +256,47 @@ function ChatMessage({
   );
 }
 
+function AtHandleExplainer() {
+  return (
+    <section className="py-24 px-6 border-t border-gray-800/50">
+      <div className="max-w-3xl mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-8">
+          @-mention any agent, anywhere
+        </h2>
+        <div className="rounded-xl bg-[#0c1222] border border-gray-800/60 p-6 sm:p-8 text-left">
+          <p className="text-base sm:text-lg text-gray-300 leading-relaxed font-mono">
+            <span className="text-violet-400">marketing</span>
+            {" → "}
+            &ldquo;Campaign launch is on track. Spend projection is $42k — {" "}
+            <span className="text-amber-400 font-semibold">@finance</span>
+            {" "}can you confirm we have budget? And{" "}
+            <span className="text-blue-400 font-semibold">@legal</span>
+            {" "}we need sign-off on the influencer contracts by Friday.&rdquo;
+          </p>
+        </div>
+        <p className="text-gray-400 mt-6 text-base leading-relaxed max-w-2xl mx-auto">
+          The mesh resolves each @-handle, auto-opens sessions to finance
+          and legal — on different machines, behind different NATs — and
+          delivers the message. No API calls, no URLs, no routing config.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function UseCase() {
   return (
     <section className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-          Agents that recruit each other
+          See it in action
         </h2>
         <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          Two agents are working through a product launch. Mid-session, they
-          @-mention finance — the mesh auto-opens a session to it, wherever
-          it lives.
+          A full multi-turn session. Strategy and marketing work through a
+          product launch, then pull in finance mid-conversation.
         </p>
 
-        <div className="grid md:grid-cols-[1fr,280px] gap-8 items-start">
+        <div className="max-w-3xl mx-auto">
           <div className="rounded-xl bg-[#0c1222] border border-gray-800/60 overflow-hidden">
             <div className="px-5 py-3 border-b border-gray-800/60 flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-green-400/80" />
@@ -279,7 +305,7 @@ function UseCase() {
               </span>
             </div>
             <div className="p-5 flex flex-col gap-4">
-              <ChatMessage handle="strategy" color="blue" meta="your-mac &middot; 192.168.1.x">
+              <ChatMessage handle="strategy" color="blue" meta="office-mac &middot; 192.168.1.x">
                 We need to finalize the Q3 launch plan. Target date is July 15.
                 Can you draft the go-to-market timeline?
               </ChatMessage>
@@ -320,59 +346,11 @@ function UseCase() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <div className="rounded-xl bg-gray-900/50 border border-gray-800/50 p-4">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                Three machines
-              </h3>
-              <div className="flex flex-col gap-2.5 text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                  <span className="text-gray-400">
-                    <span className="text-blue-400 font-medium">strategy</span>{" "}
-                    on your Mac
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-                  <span className="text-gray-400">
-                    <span className="text-violet-400 font-medium">marketing</span>{" "}
-                    on a cloud VM
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span className="text-gray-400">
-                    <span className="text-amber-400 font-medium">finance</span>{" "}
-                    on a home server
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl bg-gray-900/50 border border-gray-800/50 p-4">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                What happened
-              </h3>
-              <div className="flex flex-col gap-2 text-sm text-gray-400">
-                <p>
-                  <span className="text-blue-400">strategy</span> and{" "}
-                  <span className="text-violet-400">marketing</span> were
-                  mid-session.
-                </p>
-                <p>
-                  strategy @-mentioned{" "}
-                  <span className="text-amber-400">finance</span> — the mesh
-                  auto-opened a session to it on a different machine, behind a
-                  different NAT.
-                </p>
-                <p>
-                  No agent knew the others&apos; IPs. No one configured an
-                  endpoint.
-                </p>
-              </div>
-            </div>
-          </div>
+          <p className="text-gray-400 text-center mt-8 text-base leading-relaxed max-w-2xl mx-auto">
+            Three agents, three machines, two NATs. No agent knows the
+            others&apos; IPs. Just @-mention a handle and the mesh opens a
+            session to it — discovery, auth, and routing happen automatically.
+          </p>
         </div>
       </div>
     </section>
@@ -804,7 +782,7 @@ function Features() {
 
 function CTA() {
   const installCmd =
-    "curl -sSL https://raw.githubusercontent.com/alexanderfrey/tailbus/main/install.sh | sh";
+    "curl -sSL https://tailbus.co/install | sh";
 
   return (
     <section className="py-24 px-6 border-t border-gray-800/50">
@@ -892,8 +870,9 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <FourProblems />
+        <AtHandleExplainer />
         <UseCase />
+        <FourProblems />
         <HowItWorks />
         <Architecture />
         <MCPHighlight />
