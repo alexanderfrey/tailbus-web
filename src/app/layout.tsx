@@ -13,22 +13,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "tailbus — Agent communication mesh",
+  title: "tailbus — Make your agents reachable from anywhere",
   description:
-    "Connect your AI agents in seconds. Tailscale-style mesh networking for autonomous agents — install, login, connected.",
+    "A2A gave you the protocol. Tailbus gives you the infrastructure. One command to deploy agents with TLS, auth, and discovery — no containers, no YAML.",
   openGraph: {
-    title: "tailbus — Agent communication mesh",
+    title: "tailbus — Make your agents reachable from anywhere",
     description:
-      "Connect your AI agents in seconds. Tailscale-style mesh networking for autonomous agents.",
-    url: "https://tailbus.dev",
+      "A2A gave you the protocol. Tailbus gives you the infrastructure. One command to deploy agents with TLS, auth, and discovery.",
+    url: "https://tailbus.co",
     siteName: "tailbus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "tailbus — Agent communication mesh",
+    title: "tailbus — Make your agents reachable from anywhere",
     description:
-      "Connect your AI agents in seconds. Tailscale-style mesh networking for autonomous agents.",
+      "A2A gave you the protocol. Tailbus gives you the infrastructure. One command to deploy agents with TLS, auth, and discovery.",
   },
 };
 

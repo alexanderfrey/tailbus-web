@@ -91,20 +91,21 @@ function Hero() {
     <section className="pt-32 pb-20 px-6">
       <div className="max-w-4xl mx-auto text-center">
         <div className="inline-block mb-6 px-3 py-1 text-xs font-medium text-blue-400 bg-blue-400/10 border border-blue-400/20 rounded-full">
-          Open source agent mesh
+          Open source &middot; A2A native &middot; One command
         </div>
 
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
-          Slack for
+          Make your agents
           <br />
           <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-blue-400 bg-clip-text text-transparent">
-            autonomous agents
+            reachable from anywhere
           </span>
         </h1>
 
         <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-          Agents register handles, discover each other, and exchange messages
-          through a peer-to-peer mesh. Install, login with Google, connected.
+          A2A gave you the protocol. Tailbus gives you the infrastructure.
+          One install, and your agents get TLS, auth, discovery, and a globally
+          reachable endpoint — no containers, no port forwarding, no YAML.
         </p>
 
         <div className="max-w-2xl mx-auto mb-6">
@@ -119,23 +120,81 @@ function Hero() {
               </div>
               <div className="terminal-body text-left">
                 <span className="text-green-400">$</span>{" "}
-                <span className="text-gray-300">
-                  curl -sSL https://...tailbus/main/install.sh | sh
-                </span>
-                <br />
-                <span className="text-green-400">$</span>{" "}
-                <span className="text-gray-300">tailbusd</span>
-                <span className="text-gray-500">
-                  {"  "}# opens browser → login → connected
+                <span className="text-gray-200 font-medium text-base sm:text-lg">
+                  {installCmd}
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 mb-4">
           Linux and macOS. No dependencies. Two binaries.
         </p>
+
+        <p className="text-sm text-gray-500">
+          Then run{" "}
+          <code className="text-gray-300 bg-gray-800 px-1.5 py-0.5 rounded">
+            tailbusd
+          </code>{" "}
+          to start the daemon — it opens your browser, you login with Google,
+          and you&apos;re connected.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function TheProblem() {
+  return (
+    <section className="py-24 px-6 border-t border-gray-800/50">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
+          Deploying agents is still painful
+        </h2>
+        <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+          The protocol problem is solved. The deployment problem isn&apos;t.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="p-6 rounded-xl bg-gray-900/50 border border-gray-800/50">
+            <div className="text-2xl mb-3 text-red-400/80 font-mono font-bold">
+              ~2hrs
+            </div>
+            <h3 className="font-semibold mb-2">The yak shave, every time</h3>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Getting an agent from your laptop to a reachable endpoint with TLS,
+              auth, and discoverability is still a multi-hour detour — containers,
+              networking, DNS, certs. Every. Single. Time.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-xl bg-gray-900/50 border border-gray-800/50">
+            <div className="text-2xl mb-3 text-yellow-400/80 font-mono font-bold">
+              A2A
+            </div>
+            <h3 className="font-semibold mb-2">Protocol without infrastructure</h3>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              A2A is the right standard, and frameworks like CrewAI and ADK support it.
+              But A2A gives you a protocol — the actual deployment, connectivity,
+              and discovery are still entirely on you.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-xl bg-gray-900/50 border border-gray-800/50">
+            <div className="text-2xl mb-3 text-blue-400/80 font-mono font-bold">
+              0
+            </div>
+            <h3 className="font-semibold mb-2">
+              &ldquo;Vercel for agents&rdquo; options
+            </h3>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              There&apos;s no place where you push code and get a globally reachable
+              agent with discovery built in. No deployment layer that speaks A2A
+              natively. That&apos;s the gap Tailbus fills.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -143,7 +202,7 @@ function Hero() {
 
 function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 px-6">
+    <section id="how-it-works" className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
           Three commands, one mesh
@@ -178,7 +237,7 @@ function HowItWorks() {
               <span className="text-green-400">$</span> tailbusd
               <br />
               <span className="text-gray-500">
-                Visit https://coord.tailbus.dev/oauth/verify
+                Visit https://coord.tailbus.co/oauth/verify
               </span>
               <br />
               <span className="text-gray-500">Enter code: </span>
@@ -252,11 +311,11 @@ function Architecture() {
     <section className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-          Tailscale topology for agents
+          Tailscale for agents, speaking A2A
         </h2>
         <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          Central coordination server for discovery. Peer-to-peer gRPC for
-          data. Messages never touch the coord.
+          Central coordination for discovery. Peer-to-peer gRPC for data.
+          No custom protocol — just A2A over a mesh that handles the hard parts.
         </p>
 
         <div className="max-w-3xl mx-auto">
@@ -337,11 +396,12 @@ function Features() {
     <section id="features" className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
-          Everything you need
+          The infrastructure you&apos;d build anyway
         </h2>
         <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          Production-ready agent mesh with security, reliability, and
-          observability built in.
+          TLS, auth, discovery, NAT traversal, tracing — everything between
+          &ldquo;my agent works locally&rdquo; and &ldquo;my agent is reachable
+          in production.&rdquo;
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -367,10 +427,11 @@ function CTA() {
     <section className="py-24 px-6 border-t border-gray-800/50">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-          Get started in 60 seconds
+          Stop yak-shaving, start shipping agents
         </h2>
         <p className="text-gray-400 mb-10">
-          Open source. Free forever. Run your own coord or use ours.
+          Open source. Free forever. One command to go from local to globally
+          reachable.
         </p>
 
         <div className="max-w-xl mx-auto mb-8">
@@ -384,8 +445,8 @@ function CTA() {
             </div>
             <div className="terminal-body text-left">
               <span className="text-green-400">$</span>{" "}
-              <span className="text-gray-300">
-                curl -sSL https://...tailbus/main/install.sh | sh
+              <span className="text-gray-200 font-medium">
+                {installCmd}
               </span>
             </div>
           </div>
@@ -445,6 +506,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <TheProblem />
         <HowItWorks />
         <Architecture />
         <Features />
