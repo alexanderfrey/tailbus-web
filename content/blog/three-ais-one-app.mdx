@@ -1,0 +1,64 @@
+---
+title: "Three AIs, One App"
+description: "We built an example where Claude, Codex, and LM Studio all generate code for the same files — then a consensus step picks the best parts. Here's how it works and what we learned."
+date: "2026-03-05"
+author: "Alex Frey"
+---
+
+There's a fun thought experiment that's been floating around: what if you didn't pick one AI to write your code? What if you asked three of them — independently — and then merged the best parts?
+
+We built it. It's a [new example in the tailbus repo](https://github.com/alexanderfrey/tailbus/tree/main/examples/app-builder) where Claude Code, OpenAI Codex, and a local LM Studio model all generate code for the same app, file by file, in parallel. A consensus step compares their outputs and picks the winners.
+
+It's not a product. It's an experiment — and a surprisingly effective stress test for what agent-to-agent communication looks like in practice.
+
+## How it works
+
+You describe an app in plain English. An orchestrator agent breaks it into files, then delegates each file to all three coders simultaneously. They work in parallel — Claude Code via its CLI, Codex via its CLI, LM Studio via its local HTTP API. When all three come back, a merge agent reviews the implementations and picks the best one or combines the strongest parts.
+
+```python
+# All three coders generate the same file in parallel
+tasks = [delegate(coder, payload, timeout=120) for coder in CODERS]
+results = await asyncio.gather(*tasks, return_exceptions=True)
+```
+
+The whole thing runs over tailbus. Four agents on the mesh — `@orchestrator`, `@claude-coder`, `@codex-coder`, `@lmstudio-coder` — communicating through sessions. You fire one message and watch the dashboard light up with parallel delegation.
+
+## The interesting part
+
+The architecture forces a question most teams skip: what does consensus between AI systems actually look like?
+
+It's not voting. You can't diff three implementations of a React component and count matching lines. The merge step is itself an LLM call — "here are three versions of `app.js`, pick the best one or combine the strongest parts." That works better than you'd expect. The merge model can identify when one version has better error handling but another has cleaner structure, and produce something neither would have written alone.
+
+It also degrades gracefully. If Codex times out, consensus proceeds with two implementations. If only LM Studio responds, its output goes straight to disk. The orchestrator doesn't care how many coders show up — it works with what it gets.
+
+## Setting it up
+
+You need tailbus running and at least LM Studio with a code-capable model loaded. Claude Code and Codex are optional — the system works with any subset.
+
+```bash
+# Start the daemon
+tailbusd
+
+# Start the agents (LM Studio is the only required one)
+python lmstudio_coder.py &
+python claude_coder.py &
+python codex_coder.py &
+python orchestrator.py &
+
+# Build something
+tailbus fire orchestrator '{"command":"build","arguments":{"app":"A todo app with HTML, CSS, and vanilla JS. Local storage, add/delete/toggle."}}'
+```
+
+Generated files land in `./output/`. The orchestrator logs which model won each file and how long the whole build took.
+
+LM Studio does double duty — it generates code like the others, but it also handles planning (breaking the app into files) and merging (picking the best implementation). That keeps the expensive API calls to the coding step, where you actually want the best models competing.
+
+## What this is really about
+
+This isn't about building apps faster. A single good model with a good prompt will outperform a three-way consensus on most tasks. The point is the pattern.
+
+Four independent processes, running different backends, collaborating through a shared mesh without any of them knowing how the others work internally. The orchestrator doesn't import the Claude SDK or call the OpenAI API. It sends a message to `@claude-coder` and gets code back. The implementation behind each handle is irrelevant — swap LM Studio for Ollama, swap Codex for Gemini, the orchestrator doesn't change.
+
+That's the actual unlock. Not "three AIs are better than one" — but that agent communication as a primitive makes it trivial to compose AI systems that would otherwise require weeks of integration work. The [full example](https://github.com/alexanderfrey/tailbus/tree/main/examples/app-builder) is about 300 lines of Python across four files. Most of that is prompt formatting and file I/O.
+
+The hard part was never getting three models to generate code. It was getting three processes to talk to each other without anyone writing a REST API. The mesh makes that a non-problem — and suddenly the interesting experiments become easy to try.
