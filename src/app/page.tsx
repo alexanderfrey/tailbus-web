@@ -63,10 +63,11 @@ function Hero() {
         </h1>
 
         <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-          One install, and every agent you&apos;re running — on any machine,
-          behind any NAT — can discover each other by name and collaborate
-          across departments. No endpoints to configure, no networking code
-          to write, no infrastructure to manage.
+          Tailbus is the communication plane for heterogeneous agents across
+          runtimes, machines, and teams. Connect Python agents, MCP tools,
+          LLM pipelines, and other services with shared identity, routing,
+          rooms, policies, and observability. No endpoints to configure, no
+          networking code to write, no infrastructure glue to maintain.
         </p>
 
         <div className="max-w-lg mx-auto mb-6">
@@ -216,8 +217,9 @@ function BeforeAfter() {
           Stop building plumbing, start building agents
         </h2>
         <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto text-lg leading-relaxed">
-          Every integration between two agents costs your team a sprint.
-          Tailbus makes it zero.
+          Tailbus connects agent systems that already exist. Your team keeps
+          its runtimes and workflows; Tailbus replaces the cross-machine
+          plumbing between them.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -299,6 +301,51 @@ function ChatMessage({
       </div>
       <div className="text-sm text-gray-300 leading-relaxed">{children}</div>
     </div>
+  );
+}
+
+
+function ProductBoundary() {
+  return (
+    <section className="py-24 px-6 border-t border-gray-800/50">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
+          Tailbus is not another agent framework
+        </h2>
+        <p className="text-gray-400 text-center mb-14 max-w-3xl mx-auto text-lg leading-relaxed">
+          Keep LangGraph, CrewAI, Jido, MCP servers, internal services, or
+          custom runtimes where they are. Tailbus is the communication and
+          control plane that lets those systems collaborate across network and
+          ownership boundaries.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-xl bg-blue-950/20 border border-blue-500/20">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-blue-400 mb-5">
+              Tailbus is for
+            </h3>
+            <div className="flex flex-col gap-3 text-sm text-gray-300">
+              <p>Heterogeneous agents in different languages and runtimes</p>
+              <p>Agents running on different machines, networks, and clouds</p>
+              <p>Different departments sharing identity, routing, rooms, and policy</p>
+              <p>Observability across the whole collaborating system</p>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-xl bg-gray-900/60 border border-gray-800">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300 mb-5">
+              Tailbus is not
+            </h3>
+            <div className="flex flex-col gap-3 text-sm text-gray-400">
+              <p>A replacement for your agent runtime</p>
+              <p>A workflow DSL or planner</p>
+              <p>A memory framework</p>
+              <p>Another orchestrator that assumes one app boundary</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -601,9 +648,9 @@ function UseCase() {
           </div>
 
           <p className="text-gray-400 text-center mt-8 text-base leading-relaxed max-w-2xl mx-auto">
-            Three agents, three machines, zero integration work.
-            Each agent only knows the others&apos; names — the mesh
-            handles discovery, auth, and routing automatically.
+            Three agents, three machines, zero integration work. Each agent can
+            be built in a different runtime and owned by a different team — the
+            mesh handles discovery, auth, routing, and shared conversation state.
           </p>
         </div>
       </div>
@@ -619,8 +666,8 @@ function HowItWorks() {
           Three commands, one mesh
         </h2>
         <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          No YAML. No port forwarding. No service discovery config. Your agents
-          find each other automatically.
+          No YAML. No port forwarding. No service discovery config. Heterogeneous
+          agents find each other automatically across machine and team boundaries.
         </p>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -725,8 +772,9 @@ function Architecture() {
           Tailscale for agents, speaking A2A
         </h2>
         <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
-          Central coordination for discovery. Peer-to-peer gRPC for data.
-          No custom protocol — just A2A over a mesh that handles the hard parts.
+          Central coordination for discovery. Peer-to-peer gRPC for data. Tailbus
+          sits between agent systems as the shared communication layer, not as a
+          replacement for the runtimes behind them.
         </p>
 
         <div className="max-w-4xl mx-auto">

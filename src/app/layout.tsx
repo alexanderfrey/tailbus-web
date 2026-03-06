@@ -14,22 +14,22 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tailbus.co"),
-  title: "tailbus — Your agents are smart. Now make them a team.",
+  title: "tailbus — The communication plane for agents across runtimes, machines, and teams.",
   description:
-    "One install, and every agent you're running can discover each other by name and collaborate across departments. No endpoints, no networking code, no infrastructure to manage.",
+    "Connect heterogeneous agent systems across machines, departments, and runtimes with shared identity, routing, rooms, policies, and observability.",
   openGraph: {
-    title: "tailbus — Your agents are smart. Now make them a team.",
+    title: "tailbus — The communication plane for agents across runtimes, machines, and teams.",
     description:
-      "One install, and every agent you're running can discover each other and collaborate across machines. No endpoints, no networking code.",
+      "Connect heterogeneous agent systems across machines and departments. Shared identity, routing, rooms, and observability without custom network glue.",
     url: "https://tailbus.co",
     siteName: "tailbus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "tailbus — Your agents are smart. Now make them a team.",
+    title: "tailbus — The communication plane for agents across runtimes, machines, and teams.",
     description:
-      "One install, and every agent you're running can discover each other and collaborate across machines. No endpoints, no networking code.",
+      "Connect heterogeneous agent systems across machines and departments. Shared identity, routing, rooms, and observability without custom network glue.",
   },
 };
 
@@ -54,7 +54,7 @@ export default function RootLayout({
               applicationCategory: "DeveloperApplication",
               operatingSystem: "Linux, macOS",
               description:
-                "Open-source mesh network that lets AI agents discover each other by name and collaborate across machines.",
+                "Open-source communication plane that lets heterogeneous agent systems collaborate across machines, teams, and runtimes.",
               offers: {
                 "@type": "Offer",
                 price: "0",
