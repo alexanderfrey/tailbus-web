@@ -1,9 +1,10 @@
 import { Nav } from "@/components/Nav";
+import { PricingTiers } from "@/components/PricingTiers";
 
 export const metadata = {
   title: "Pricing — tailbus",
   description:
-    "Free for individuals. Team and enterprise plans for organizations running agents in production.",
+    "Open source mesh. Managed everything else. Free for individuals, team and enterprise plans for production.",
 };
 
 function CheckIcon() {
@@ -20,73 +21,69 @@ function CheckIcon() {
   );
 }
 
-function Tier({
-  name,
-  price,
-  period,
-  description,
-  features,
-  cta,
-  ctaHref,
-  highlighted,
-  badge,
-}: {
-  name: string;
-  price: string;
-  period?: string;
-  description: string;
-  features: string[];
-  cta: string;
-  ctaHref: string;
-  highlighted?: boolean;
-  badge?: string;
-}) {
+function SelfHostComparison() {
+  const rows = [
+    { feature: "Agent mesh & P2P messaging", selfHost: true, managed: true },
+    { feature: "Python SDK & CLI", selfHost: true, managed: true },
+    { feature: "MCP gateway", selfHost: true, managed: true },
+    { feature: "NAT traversal relay", selfHost: "Run your own", managed: "Managed, priority routing" },
+    { feature: "Coordination server", selfHost: "Run your own", managed: "Managed, multi-region" },
+    { feature: "Team identity & invites", selfHost: false, managed: true },
+    { feature: "Analytics dashboard", selfHost: false, managed: true },
+    { feature: "RBAC & audit logs", selfHost: false, managed: "Enterprise" },
+    { feature: "SSO / SAML", selfHost: false, managed: "Enterprise" },
+  ];
+
   return (
-    <div
-      className={`relative rounded-2xl p-8 flex flex-col ${
-        highlighted
-          ? "bg-blue-950/30 border-2 border-blue-500/40"
-          : "bg-gray-900/50 border border-gray-800/50"
-      }`}
-    >
-      {badge && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="px-3 py-1 text-xs font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/30 rounded-full">
-            {badge}
-          </span>
-        </div>
-      )}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">{name}</h3>
-        <div className="flex items-baseline gap-1.5">
-          <span className="text-4xl font-bold tracking-tight">{price}</span>
-          {period && <span className="text-gray-500 text-sm">{period}</span>}
-        </div>
-        <p className="text-sm text-gray-400 mt-3 leading-relaxed">
-          {description}
+    <section className="py-16 px-6">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-2xl font-bold mb-3 text-center">
+          Self-hosted vs managed
+        </h2>
+        <p className="text-gray-400 text-sm text-center mb-10 max-w-xl mx-auto">
+          The mesh is fully open source — self-host everything if you want.
+          Paid plans add the infrastructure and team features so you don&apos;t have to run them yourself.
         </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-800/50">
+                <th className="text-left py-3 px-4 text-gray-400 font-medium">Feature</th>
+                <th className="text-center py-3 px-4 text-gray-400 font-medium">Self-hosted</th>
+                <th className="text-center py-3 px-4 text-gray-400 font-medium">Managed</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr key={row.feature} className="border-b border-gray-800/30">
+                  <td className="py-3 px-4 text-gray-300">{row.feature}</td>
+                  <td className="py-3 px-4 text-center">
+                    {row.selfHost === true ? (
+                      <span className="text-green-400">
+                        <CheckIcon />
+                      </span>
+                    ) : row.selfHost === false ? (
+                      <span className="text-gray-600">&mdash;</span>
+                    ) : (
+                      <span className="text-gray-400 text-xs">{row.selfHost}</span>
+                    )}
+                  </td>
+                  <td className="py-3 px-4 text-center">
+                    {row.managed === true ? (
+                      <span className="text-green-400">
+                        <CheckIcon />
+                      </span>
+                    ) : (
+                      <span className="text-blue-400 text-xs">{row.managed}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div className="flex flex-col gap-3 mb-8 flex-1">
-        {features.map((f) => (
-          <div key={f} className="flex items-start gap-2.5">
-            <CheckIcon />
-            <span className="text-sm text-gray-300">{f}</span>
-          </div>
-        ))}
-      </div>
-      <a
-        href={ctaHref}
-        target={ctaHref.startsWith("http") ? "_blank" : undefined}
-        rel={ctaHref.startsWith("http") ? "noopener noreferrer" : undefined}
-        className={`block text-center px-5 py-2.5 rounded-lg font-medium text-sm transition-colors ${
-          highlighted
-            ? "bg-blue-600 text-white hover:bg-blue-500"
-            : "bg-gray-800 text-gray-200 hover:bg-gray-700 border border-gray-700"
-        }`}
-      >
-        {cta}
-      </a>
-    </div>
+    </section>
   );
 }
 
@@ -98,11 +95,15 @@ function FAQ() {
     },
     {
       q: "What counts as an agent?",
-      a: "Any process that registers a handle with the daemon. A Python script, an LLM pipeline, an MCP tool — each registered handle is one agent.",
+      a: "Any process that registers a handle with the daemon. A Python script, an LLM pipeline, an MCP tool — each registered handle is one agent. If an agent disconnects and reconnects, it's still the same handle — it doesn't count twice.",
+    },
+    {
+      q: "Do test and dev agents count toward limits?",
+      a: "Yes — every registered handle counts. But with 15 agents on the free tier, most developers have plenty of room for both production and development handles.",
     },
     {
       q: "What happens if I hit the free tier limits?",
-      a: "New agent registrations will be rejected once you reach 5 handles or 3 machines. Existing agents keep working. You can upgrade at any time to remove limits.",
+      a: "New agent registrations will be rejected once you reach 15 handles or 5 machines. Existing agents keep working. You can upgrade at any time to remove limits.",
     },
     {
       q: "Do messages pass through your servers?",
@@ -146,73 +147,16 @@ export default function PricingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-              Free to start. Pay when your team grows.
+              Open source mesh. Managed everything else.
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              The core mesh is open source and always will be.
-              Paid plans add team collaboration, governance, and managed
-              infrastructure.
+              The core mesh, SDK, and daemon are open source and always will be.
+              Paid plans add managed coordination, team identity, and
+              enterprise governance.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <Tier
-              name="Free"
-              price="$0"
-              period="forever"
-              description="For individuals exploring agent collaboration. Everything you need to get started."
-              features={[
-                "Up to 5 agents",
-                "Up to 3 machines",
-                "Shared coordination server",
-                "NAT traversal via community relay",
-                "MCP gateway for Claude & Cursor",
-                "Google OAuth login",
-                "Python SDK + CLI",
-                "Community support",
-              ]}
-              cta="Get started"
-              ctaHref="/getting-started"
-            />
-
-            <Tier
-              name="Team"
-              price="$49"
-              period="/month"
-              description="For teams running agents in production. Shared mesh, analytics, and priority infrastructure."
-              features={[
-                "Unlimited agents and machines",
-                "Team mesh — multiple users, one network",
-                "Session history and analytics dashboard",
-                "Priority relay (faster NAT traversal)",
-                "Webhook integrations",
-                "Usage metrics and alerts",
-                "Email support",
-              ]}
-              cta="Coming soon"
-              ctaHref="#"
-              highlighted
-              badge="Most popular"
-            />
-
-            <Tier
-              name="Enterprise"
-              price="Custom"
-              description="For organizations that need governance, compliance, and dedicated infrastructure."
-              features={[
-                "Everything in Team",
-                "RBAC — control which agents can talk to which",
-                "Full audit logs for every session",
-                "SSO / SAML (Okta, Azure AD)",
-                "Dedicated coordination server",
-                "Data residency (EU / US)",
-                "Custom SLA",
-                "Dedicated support",
-              ]}
-              cta="Contact us"
-              ctaHref="mailto:alex@tailbus.co"
-            />
-          </div>
+          <PricingTiers />
 
           <div className="text-center mb-8">
             <p className="text-sm text-gray-500">
@@ -222,6 +166,8 @@ export default function PricingPage() {
           </div>
         </div>
       </main>
+
+      <SelfHostComparison />
 
       <FAQ />
 
