@@ -3,7 +3,13 @@
 import Link from "next/link";
 import type { Team } from "@/lib/api";
 
-export function TeamCard({ team }: { team: Team }) {
+interface TeamCardProps {
+  team: Team;
+  memberCount?: number;
+  nodeCount?: number;
+}
+
+export function TeamCard({ team, memberCount, nodeCount }: TeamCardProps) {
   return (
     <Link
       href={`/dashboard/teams/${team.team_id}`}
@@ -22,6 +28,13 @@ export function TeamCard({ team }: { team: Team }) {
         </span>
       </div>
       <p className="mt-2 text-sm text-gray-400 font-mono">{team.team_id}</p>
+      {(memberCount !== undefined || nodeCount !== undefined) && (
+        <p className="mt-1 text-xs text-gray-500">
+          {memberCount !== undefined && `${memberCount} member${memberCount !== 1 ? "s" : ""}`}
+          {memberCount !== undefined && nodeCount !== undefined && ", "}
+          {nodeCount !== undefined && `${nodeCount} node${nodeCount !== 1 ? "s" : ""}`}
+        </p>
+      )}
     </Link>
   );
 }

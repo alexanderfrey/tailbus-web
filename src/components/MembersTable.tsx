@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Member } from "@/lib/api";
 import { removeTeamMember, updateMemberRole } from "@/lib/api";
+import { trackMemberRemoved, trackMemberRoleChanged } from "@/lib/analytics";
 import { ConfirmDialog } from "./ConfirmDialog";
 
 interface MembersTableProps {
@@ -27,6 +28,7 @@ export function MembersTable({
     if (!removing) return;
     try {
       await removeTeamMember(teamId, removing);
+      trackMemberRemoved(teamId);
       setRemoving(null);
       onUpdate();
     } catch (e: unknown) {
@@ -39,6 +41,7 @@ export function MembersTable({
     const newRole = currentRole === "owner" ? "member" : "owner";
     try {
       await updateMemberRole(teamId, email, newRole);
+      trackMemberRoleChanged(teamId, newRole);
       onUpdate();
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Failed to update role");

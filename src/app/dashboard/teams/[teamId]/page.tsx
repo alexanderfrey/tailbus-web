@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
-import { LoginGate } from "@/components/LoginGate";
 import { MembersTable } from "@/components/MembersTable";
 import { NodesTable } from "@/components/NodesTable";
 import { InviteDialog } from "@/components/InviteDialog";
@@ -15,6 +14,7 @@ import {
   type Member,
   type Node,
 } from "@/lib/api";
+import { trackTeamDeleted } from "@/lib/analytics";
 
 function TeamDetailContent() {
   const params = useParams();
@@ -55,6 +55,7 @@ function TeamDetailContent() {
   const handleDelete = async () => {
     try {
       await deleteTeam(teamId);
+      trackTeamDeleted(teamId);
       router.push("/dashboard");
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Failed to delete team");
@@ -176,9 +177,5 @@ function TeamDetailContent() {
 }
 
 export default function TeamDetailPage() {
-  return (
-    <LoginGate>
-      <TeamDetailContent />
-    </LoginGate>
-  );
+  return <TeamDetailContent />;
 }

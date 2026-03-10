@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createInvite } from "@/lib/api";
+import { trackInviteGenerated } from "@/lib/analytics";
 
 interface InviteDialogProps {
   open: boolean;
@@ -25,6 +26,7 @@ export function InviteDialog({ open, teamId, onClose }: InviteDialogProps) {
     try {
       const result = await createInvite(teamId, maxUses, ttlDays * 86400);
       setCode(result.code);
+      trackInviteGenerated(teamId);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Failed to create invite");
     } finally {
@@ -117,6 +119,12 @@ export function InviteDialog({ open, teamId, onClose }: InviteDialogProps) {
             </div>
             <p className="mt-2 text-xs text-gray-500">
               Accept with: <code className="text-gray-400">tailbus team join {code}</code>
+            </p>
+            <p className="mt-1 text-xs text-gray-500">
+              Or share this link:{" "}
+              <code className="text-gray-400 select-all">
+                {typeof window !== "undefined" ? window.location.origin : "https://tailbus.co"}/dashboard/invite?code={code}
+              </code>
             </p>
             <div className="mt-6 flex justify-end">
               <button
