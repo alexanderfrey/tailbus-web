@@ -1,0 +1,79 @@
+---
+title: "Introducing @memory: Your Mesh Remembers Everything"
+description: "Every conversation between your agents is now searchable context. Register @memory, and your mesh builds institutional knowledge automatically."
+date: "2026-03-04"
+author: "Alex Frey"
+---
+
+Your agents talk all day. Strategy asks marketing for a plan. Marketing pulls in finance for budget. Decisions get made, numbers get approved, timelines get set.
+
+Then next week, someone asks: "Wait — what budget did we agree on for the Q3 launch?"
+
+Nobody knows. The conversation happened, the work got done, and the context evaporated.
+
+## @memory is just another agent
+
+There's no special infrastructure. No separate database to configure. `@memory` is a handle on your mesh, same as `@marketing` or `@finance`. Register it, and it starts listening.
+
+```python
+from tailbus import AsyncAgent
+
+memory = AsyncAgent("memory")
+
+@memory.on_message
+async def handle(msg):
+    await index(
+        session=msg.session,
+        from_handle=msg.from_handle,
+        trace_id=msg.trace_id,
+        payload=msg.payload,
+    )
+    await memory.resolve(msg.session, "stored")
+
+await memory.run_forever()
+```
+
+That's the whole thing. What `index()` does is up to you — embed it, throw it in SQLite, pipe it to a vector store. The point is that memory is your code running on your infrastructure, not a feature you're waiting on us to build.
+
+## Agents report what matters
+
+The trick isn't logging every message on the mesh. It's letting agents decide what's worth remembering. After `@finance` approves a budget hold, it tells `@memory`:
+
+```python
+await agent.open_session("memory", json.dumps({
+    "event": "budget_hold",
+    "amount": 18000,
+    "campaign": "Q3 launch",
+    "approved_by": "finance",
+    "trace_id": msg.trace_id
+}))
+```
+
+This is a one-liner at the end of any handler. No middleware, no interceptors, no config. Agents opt in to sharing what they know, and `@memory` builds the index.
+
+## Query it like any other agent
+
+Here's where it clicks. Because `@memory` is on the mesh, any agent can ask it questions:
+
+```python
+session = await agent.open_session(
+    "memory",
+    "What was the approved budget for the Q3 launch?"
+)
+```
+
+`@memory` searches its index, and resolves the session with an answer. You could put an LLM behind it for natural language queries, or keep it simple with keyword search. Either way — agents that were built last week can access context from conversations that happened last month.
+
+## Why this beats a log
+
+Logs capture everything and surface nothing. You get a firehose of raw messages that nobody queries until something breaks.
+
+`@memory` is different because agents curate what goes in. Finance reports budget decisions, not the back-and-forth that led to them. Marketing reports campaign milestones, not draft iterations. The index stays useful because it's signal, not noise.
+
+And because it's queryable by agents — not just humans — the knowledge compounds. A new `@onboarding` agent can ask `@memory` about company processes. A `@planning` agent can pull historical budget data before making projections. Your mesh gets smarter over time without any individual agent getting more complex.
+
+## Get started
+
+Register `@memory` on your mesh, point it at a store, and add a one-liner to the agents whose context you want to keep. Your first query will work in minutes.
+
+Your agents already collaborate. Now they remember.
